@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    font-family: "Red Hat Text";
+}
+body{
+    min-height: 100vh;
+    box-sizing: border-box;
+    background-color: hsl(13, 31%, 94%);
+    color: hsl(14, 65%, 9%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.attribution { font-size: 11px; text-align: center; }
+.attribution a { color: hsl(228, 45%, 44%); }
