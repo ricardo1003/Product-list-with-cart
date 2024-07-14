@@ -8,13 +8,67 @@ body{
     background-color: hsl(13, 31%, 94%);
     color: hsl(14, 65%, 9%);
 }
+img{
+    max-width: 100%;
+}
+.desserts{
+    padding: 1.5em;
+}
+h1{
+    margin-bottom: 1rem;
+    font-size: 3em;
+}
+.desserts section{
+    display: grid;
+    gap: 20px;
+}
+.desserts section> div .img{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+.desserts section> div .img> picture{
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    overflow: hidden;
 
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.desserts section> div .img button{
+    padding: 10px 30px;
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    bottom: -23px;
+    border: 2px solid hsl(7, 20%, 60%);
+    border-radius: 100px;
+    font-weight: 600;
 
-
-
-
-
-
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+}
+.desserts section>div> p:first-of-type{
+    margin-top: 2rem;
+    color: hsl(7, 20%, 60%);
+}
+.desserts section>div> h2{
+    margin: .25rem 0;
+    font-size: 1.125em;
+    font-weight: 600;
+}
+.desserts section>div> p:last-of-type{
+    font-weight: 600;
+    color: hsl(14, 86%, 42%);
+}
 
 
 
