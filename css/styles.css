@@ -12,14 +12,24 @@ img{
     max-width: 100%;
 }
 main{
+    display: flex;
+    /* flex-wrap: wrap; */
     padding: 1.5em;
 }
 h1{
+    align-self: flex-start;
     margin-bottom: 1rem;
     font-size: 3em;
 }
+.desserts{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
 .desserts section{
     display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(auto-fill, 327.2px);
     gap: 20px;
 }
 .desserts section> div .img{
@@ -42,6 +52,7 @@ h1{
     -o-border-radius: 10px;
 }
 button{
+    cursor: pointer;
     border-radius: 100px;
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
@@ -72,6 +83,8 @@ button{
 }
 
 .cart{
+    min-width: 330px;
+    height: max-content;
     margin-top: 2em;
     padding: 1rem;
     border-radius: 10px;
@@ -98,28 +111,38 @@ ul{
 }
 .productAdded{
     position: relative;
+    display: flex;
     font-size: .875em;
     padding-bottom: 20px;
     border-bottom: 1px solid hsl(7, 20%, 60%);
 }
-.productAdded::after{
-    content: "";
+.removeProduct{
     width: 15px;
     aspect-ratio: 1/1;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     right: 0;
-    top: 25%;
     border: 2px solid hsl(14, 25%, 72%);
     border-radius: 100px;
-    background: url("../assets/images/icon-remove-item.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
     -ms-border-radius: 100px;
     -o-border-radius: 100px;
+}
+.removeProduct:hover{
+    border: 2px solid hsl(12, 20%, 44%);
+}
+.removeProduct:hover img{
+    filter: brightness(0.6);
+    -webkit-filter: brightness(0.6);
+}
+.removeProduct img{
+    position: absolute;
+}
+.productAdded::after:hover{
+    background-color: rebeccapurple;
 }
 .productAdded>div h4{
     margin-bottom: 1em;
@@ -169,7 +192,7 @@ ul{
     font-weight: 600;
 }
 
-.cart.filledCart .waiting, .cart.notfilledCart :not(.waiting){
+.cart.filledCart .waiting, .cart.notfilledCart :not(.waiting, h3){
     display: none;
 }
 .cart.filledCart :not(.waiting), .cart.notfilledCart .waiting{
@@ -177,28 +200,21 @@ ul{
 }
 .cart.notfilledCart{
     align-items: center;
+    gap: 20px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.cart.notfilledCart h3{
+    align-self: flex-start;
+}
 
 .attribution { font-size: 11px; text-align: center; }
 .attribution a { color: hsl(228, 45%, 44%); }
+
+
+@media only screen and (max-width:1085px) {
+    main{
+        flex-direction: column;
+    }
+    .cart{
+        margin: 0 auto;
+    }
+}
