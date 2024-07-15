@@ -11,7 +11,7 @@ body{
 img{
     max-width: 100%;
 }
-.desserts{
+main{
     padding: 1.5em;
 }
 h1{
@@ -41,6 +41,13 @@ h1{
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 }
+button{
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+}
 .desserts section> div .img button{
     padding: 10px 30px;
     display: flex;
@@ -48,17 +55,11 @@ h1{
     position: absolute;
     bottom: -23px;
     border: 2px solid hsl(7, 20%, 60%);
-    border-radius: 100px;
     font-weight: 600;
-
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
-    -ms-border-radius: 100px;
-    -o-border-radius: 100px;
 }
 .desserts section>div> p:first-of-type{
     margin-top: 2rem;
-    color: hsl(7, 20%, 60%);
+    color: hsl(12, 20%, 44%);
 }
 .desserts section>div> h2{
     margin: .25rem 0;
@@ -70,8 +71,113 @@ h1{
     color: hsl(14, 86%, 42%);
 }
 
+.cart{
+    margin-top: 2em;
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
 
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.cart.filledCart{
+    gap: 1em;
+}
+.cart h3{
+    color: hsl(14, 86%, 42%);
+    font-size: 1.5em;
+}
+ul{
+    margin: 10px 0;
+    list-style-type: none;
+    padding: 0;
+}
+.productAdded{
+    position: relative;
+    font-size: .875em;
+    padding-bottom: 20px;
+    border-bottom: 1px solid hsl(7, 20%, 60%);
+}
+.productAdded::after{
+    content: "";
+    width: 15px;
+    aspect-ratio: 1/1;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 25%;
+    border: 2px solid hsl(14, 25%, 72%);
+    border-radius: 100px;
+    background: url("../assets/images/icon-remove-item.svg");
+    background-position: center;
+    background-repeat: no-repeat;
 
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+}
+.productAdded>div h4{
+    margin-bottom: 1em;
+}
+.productAdded>div>div{
+    display: flex;
+    gap: 10px;
+}
+.productAdded>div>div p:first-of-type{
+    color: hsl(14, 86%, 42%);
+    font-weight: 600;
+}
+.productAdded>div>div p:last-of-type{
+    display: flex;
+    gap: 7px;
+    color: hsl(12, 20%, 44%);
+}
+
+.cart.filledCart> p:last-of-type{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cart.filledCart> p:last-of-type b{
+    font-size: 1.25em;
+}
+.carbon-free{
+    padding: .75em;
+    height: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border-radius: 10px;
+    background-color: hsl(13, 31%, 94%);
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.confirm{
+    padding: 1em;
+    background-color: hsl(14, 86%, 42%);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+
+.cart.filledCart .waiting, .cart.notfilledCart :not(.waiting){
+    display: none;
+}
+.cart.filledCart :not(.waiting), .cart.notfilledCart .waiting{
+    display: auto;
+}
+.cart.notfilledCart{
+    align-items: center;
+}
 
 
 
