@@ -1,3 +1,4 @@
+
 *{
     margin: 0;
     font-family: "Red Hat Text";
@@ -13,7 +14,6 @@ img{
 }
 main{
     display: flex;
-    /* flex-wrap: wrap; */
     padding: 1.5em;
 }
 h1{
@@ -32,13 +32,13 @@ h1{
     grid-template-columns: repeat(auto-fill, 327.2px);
     gap: 20px;
 }
-.desserts section> div .img{
+.product .img{
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
 }
-.desserts section> div .img> picture{
+.product .img> picture{
     height: 200px;
     display: flex;
     align-items: center;
@@ -51,7 +51,7 @@ h1{
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 }
-button{
+button, .buttonClicked{
     cursor: pointer;
     border-radius: 100px;
     -webkit-border-radius: 100px;
@@ -59,25 +59,60 @@ button{
     -ms-border-radius: 100px;
     -o-border-radius: 100px;
 }
-.desserts section> div .img button{
-    padding: 10px 30px;
+.addToCartButton, .buttonClicked{
+    min-width: 165.52px;
+    height: 40.27px;
+    box-sizing: border-box;
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
     position: absolute;
     bottom: -23px;
     border: 2px solid hsl(7, 20%, 60%);
     font-weight: 600;
 }
-.desserts section>div> p:first-of-type{
+.addToCartButton ~ .buttonClicked{
+    display: none;
+}
+.addToCartButton.clicked{
+    display: none;
+}
+.addToCartButton.clicked ~ .buttonClicked{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: hsl(14, 86%, 42%);
+}
+.buttonClicked button{
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: none;
+    border: 2px solid white;
+}
+.buttonClicked button:hover{
+    background-color: #fff;
+}
+.buttonClicked button:hover img{
+    filter: brightness(0);
+    -webkit-filter: brightness(0);
+}
+.buttonClicked p{
+    color: white;
+}
+.product .shortItemName{
     margin-top: 2rem;
     color: hsl(12, 20%, 44%);
 }
-.desserts section>div> h2{
+.product .itemName{
     margin: .25rem 0;
     font-size: 1.125em;
     font-weight: 600;
 }
-.desserts section>div> p:last-of-type{
+.product> .itemPrice{
     font-weight: 600;
     color: hsl(14, 86%, 42%);
 }
@@ -192,7 +227,7 @@ ul{
     font-weight: 600;
 }
 
-.cart.filledCart .waiting, .cart.notfilledCart :not(.waiting, h3){
+.cart.filledCart .waiting, .cart.notfilledCart :not(.waiting, h3), .noDisplay{
     display: none;
 }
 .cart.filledCart :not(.waiting), .cart.notfilledCart .waiting{
@@ -204,6 +239,29 @@ ul{
 }
 .cart.notfilledCart h3{
     align-self: flex-start;
+}
+
+.product .img button.added{
+    justify-content: space-evenly;
+    background-color: hsl(14, 86%, 42%);
+}
+.summatoryButton{
+    padding: 5px;
+    aspect-ratio: 1/1;
+    border: 1px solid white;
+    border-radius: 100px;
+
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    -ms-border-radius: 100px;
+    -o-border-radius: 100px;
+}
+.summatoryButton:hover{
+    background-color: #fff;
+}
+.summatoryButton:hover img{
+    filter: brightness(0);
+    -webkit-filter: brightness(0);
 }
 
 .attribution { font-size: 11px; text-align: center; }
