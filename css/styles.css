@@ -227,7 +227,7 @@ ul{
     font-weight: 600;
 }
 
-.cart.filledCart .waiting, .cart.notfilledCart :not(.waiting, h3), .noDisplay{
+.cart.filledCart .waiting, .cart.notfilledCart :not(.waiting, h3, span), .noDisplay{
     display: none;
 }
 .cart.filledCart :not(.waiting), .cart.notfilledCart .waiting{
