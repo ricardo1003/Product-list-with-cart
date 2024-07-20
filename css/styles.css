@@ -149,7 +149,7 @@ ul{
     display: flex;
     align-items: center;
     font-size: .875em;
-    padding-bottom: 20px;
+    padding: 20px 0;
     border-bottom: 1px solid hsl(7, 20%, 60%);
 }
 .removeProduct{
@@ -177,23 +177,18 @@ ul{
 .removeProduct img{
     position: absolute;
 }
-.productAdded::after:hover{
-    background-color: rebeccapurple;
-}
 .productAdded>div h4{
     margin-bottom: 1em;
 }
-.productAdded>div>div{
+.productAdded .price p{
     display: flex;
     gap: 10px;
 }
-.productAdded>div>div p:first-of-type{
+.productAdded .price p b:first-of-type{
     color: hsl(14, 86%, 42%);
     font-weight: 600;
 }
-.productAdded>div>div p:last-of-type{
-    display: flex;
-    gap: 7px;
+.productAdded .price p b:last-of-type{
     color: hsl(12, 20%, 44%);
 }
 
