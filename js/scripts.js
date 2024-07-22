@@ -8,8 +8,9 @@ const yourCartElement = document.getElementsByClassName("cart")[0]
 const productListElement = document.getElementsByClassName("productsAdded")[0]
 const totalPriceElement = document.getElementsByClassName("totalPrice")[0]
 
+let quantities = Array(addToCartButtons.length).fill(0)
+let totalPrices = Array(addToCartButtons.length).fill(0)
 
-let OrderTotal = 0
 const createProductItem = (name, price, quantity) => `
 <div>
     <h4>${name}</h4>
@@ -17,130 +18,111 @@ const createProductItem = (name, price, quantity) => `
         <p><b>${quantity}x</b> <span class="unitPrice">@$${price}</span> <b class="unitsPriceSum">$${(price * quantity).toFixed(2)}</b></p>
     </div>
 </div>
-<div class="removeProduct">
+<button type="button" class="removeProduct">
     <img src="./assets/images/icon-remove-item.svg" alt="remove">
-</div>
-`;
+</button>
+`
 
-const itemNames = [];
-const itemPrices = [];
+const itemNames = []
+const itemPrices = []
 
 fetch('data.json')
   .then(response => response.json())
   .then(data => {
     data.forEach((item, index) => {
-      itemNames[index] = item.name;
-      itemPrices[index] = item.price;
-    });
+      itemNames[index] = item.name
+      itemPrices[index] = item.price
+    })
   })
-  .catch(error => console.error('Error al cargar el JSON:', error));
+  .catch(error => console.error('Error al cargar el JSON:', error))
+  
+function totalItemsOnCart() {
+  return quantities.reduce((acc, cur) => acc + cur, 0)
+}
 
-let totalAmountOfDesserts = 0;
-const indexOfItem = [];
-const quantities = Array(addToCartButtons.length).fill(0);
+function totalPrice() {
+  return quantities.reduce((acc, quantity, i) => acc + (quantity * itemPrices[i]), 0)
+}
+
+function updateCart() {
+  totalAmountNumber.innerHTML = totalItemsOnCart()
+  totalPriceElement.innerHTML = `$${totalPrice().toFixed(2)}`
+  
+  if (totalItemsOnCart() === 0) {
+    yourCartElement.classList.add("notfilledCart")
+    yourCartElement.classList.remove("filledCart")
+  } else {
+    yourCartElement.classList.remove("notfilledCart")
+    yourCartElement.classList.add("filledCart")
+  }
+}
 
 for (let i = 0; i < addToCartButtons.length; i++) {
   addToCartButtons[i].addEventListener("click", () => {
-    if (quantities[i] === 0) {
-      quantities[i] = 1;
-      addToCartButtons[i].classList.add("clicked");
-      const newItemAdded = document.createElement("li");
-      newItemAdded.classList.add("productAdded");
-      newItemAdded.dataset.index = i;
-      newItemAdded.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i]);
-      productListElement.appendChild(newItemAdded);
+    quantities[i]++
+    amountOfItems[i].innerHTML = quantities[i]
+    addToCartButtons[i].classList.add("clicked")
+    const itemElement = productListElement.querySelector(`[data-index="${i}"]`)
+    if (!itemElement) {
+      const newItemAdded = document.createElement("li")
+      newItemAdded.classList.add("productAdded")
+      newItemAdded.dataset.index = i
+      newItemAdded.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i])
+      productListElement.appendChild(newItemAdded)
     } else {
-      quantities[i]++;
-      const itemElement = productListElement.querySelector(`[data-index="${i}"]`);
-      itemElement.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i]);
+      itemElement.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i])
     }
-
-    totalAmountOfDesserts++;
-    totalAmountNumber.innerHTML = totalAmountOfDesserts;
-    yourCartElement.classList.remove("notfilledCart");
-    yourCartElement.classList.add("filledCart");
-    
-    amountOfItems[i].innerHTML = 1
-    const unitsPriceSum = [...document.getElementsByClassName("unitsPriceSum")]
-    
-    let parsedPrices = []
-    unitsPriceSum.forEach(price =>{
-        const Prices = price.innerHTML
-        const split = Prices.split("")
-        split.shift()
-        const merge = split.join("")
-        parsedPrices.push(parseFloat(merge))
-    })
-    totalPriceElement.innerHTML = `$${parsedPrices.reduce((acumulador, valorActual) => acumulador + parseFloat(valorActual), 0)}`
-  });
+    updateCart()
+    updateRemoveButtons()
+  })
+  
   decrementButtons[i].addEventListener("click", () => {
-    amountOfItems[i].innerHTML--
     if (quantities[i] > 0) {
-        quantities[i]--;
-        totalAmountOfDesserts--;
-        const unitsPriceSum = [...document.getElementsByClassName("unitsPriceSum")]
-        const unitPrice = [...document.getElementsByClassName("unitPrice")]
-    
-        let parsedPrices = []
-        unitsPriceSum.forEach(price =>{
-            const Prices = price.innerHTML
-            const split = Prices.split("")
-            split.shift()
-            const merge = split.join("")
-            parsedPrices.push(parseFloat(merge))
-        })
-        let parsedunitPrices = [Array(addToCartButtons.length).fill(0)]
-        let unitIndex = 0
-        unitPrice.forEach((unit, index) =>{
-            const Prices = unit.innerHTML
-            const split = Prices.split("")
-            split.shift()
-            split.shift()
-            const merge = split.join("")
-            parsedunitPrices[index] = (parseFloat(merge))
-            unitIndex = index
-        })
-        console.log(parsedunitPrices)
-        const totalSplitted = totalPriceElement.innerHTML.split("")
-        totalSplitted.shift()
-        const totalJoined = totalSplitted.join("")
-        totalPriceElement.innerHTML = `$${totalJoined - parsedunitPrices[unitIndex]}`
-
-        if (quantities[i] === 0) {
-            addToCartButtons[i].classList.remove("clicked");
-            const itemElement = productListElement.querySelector(`[data-index="${i}"]`);
-            itemElement.remove();
-        } else {
-            const itemElement = productListElement.querySelector(`[data-index="${i}"]`);
-        itemElement.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i]);
+      quantities[i]--
+      amountOfItems[i].innerHTML = quantities[i]
+      const itemElement = productListElement.querySelector(`[data-index="${i}"]`)
+      if (quantities[i] === 0 && itemElement) {
+        itemElement.remove()
+      } else {
+        itemElement.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i])
       }
-      
-      if (totalAmountOfDesserts === 0) {
-          yourCartElement.classList.add("notfilledCart");
-          yourCartElement.classList.remove("filledCart");
-        }
-      totalAmountNumber.innerHTML = totalAmountOfDesserts;
+      if(quantities[i] < 1){
+        addToCartButtons[i].classList.remove("clicked")
+      }
+      updateCart()
     }
-});
+  })
+  
   incrementButtons[i].addEventListener("click", () => {
-      amountOfItems[i].innerHTML++
-      quantities[i]++;
-    totalAmountOfDesserts++;
-    const itemElement = productListElement.querySelector(`[data-index="${i}"]`);
-    itemElement.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i]);
-    totalAmountNumber.innerHTML = totalAmountOfDesserts;
-    yourCartElement.classList.remove("notfilledCart");
-    yourCartElement.classList.add("filledCart");
-    const unitsPriceSum = [...document.getElementsByClassName("unitsPriceSum")]
-    
-    let parsedPrices = []
-    unitsPriceSum.forEach(price =>{
-        const Prices = price.innerHTML
-        const split = Prices.split("")
-        split.shift()
-        const merge = split.join("")
-        parsedPrices.push(parseFloat(merge))
-    })
-    totalPriceElement.innerHTML = `$${parsedPrices.reduce((acumulador, valorActual) => acumulador + parseFloat(valorActual), 0)}`
-  });
+    quantities[i]++
+    amountOfItems[i].innerHTML = quantities[i]
+    const itemElement = productListElement.querySelector(`[data-index="${i}"]`)
+    itemElement.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i])
+    updateCart()
+  })
+}
+
+function updateRemoveButtons() {
+  const removeButtons = document.querySelectorAll('.removeProduct')
+  removeButtons.forEach(button => {
+    button.replaceWith(button.cloneNode(true))
+  })
+  
+  let allButtons = Array(addToCartButtons.length).fill(0)
+  for (let i = 0; i<allButtons.length; i++){
+    const productToRemove = document.querySelector(`.productAdded[data-index="${i}"]`)
+    allButtons[i] = productToRemove
+    if(allButtons[i] !== null){
+      const indexToRemove = allButtons[i].dataset.index
+      allButtons[i].addEventListener("click", ()=>{
+        productToRemove.remove()
+        quantities[i] = 0
+        addToCartButtons[i].classList.remove("clicked")
+        amountOfItems[i].innerHTML = 0
+        totalItemsOnCart()
+        totalPrice()
+        updateCart()
+      })
+    }
+  }
 }
