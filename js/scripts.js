@@ -7,6 +7,7 @@ const totalAmountNumber = document.getElementsByClassName("totalNumber")[0]
 const yourCartElement = document.getElementsByClassName("cart")[0]
 const productListElement = document.getElementsByClassName("productsAdded")[0]
 const totalPriceElement = document.getElementsByClassName("totalPrice")[0]
+const confirmButton = document.getElementsByClassName("confirm")[0]
 
 let quantities = Array(addToCartButtons.length).fill(0)
 let totalPrices = Array(addToCartButtons.length).fill(0)
@@ -126,3 +127,7 @@ function updateRemoveButtons() {
     }
   }
 }
+
+confirmButton.addEventListener("click", ()=>{
+  console.log("clicked!")
+})
