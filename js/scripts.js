@@ -6,8 +6,12 @@ const incrementButtons = document.getElementsByClassName("increment")
 const totalAmountNumber = document.getElementsByClassName("totalNumber")[0]
 const yourCartElement = document.getElementsByClassName("cart")[0]
 const productListElement = document.getElementsByClassName("productsAdded")[0]
-const totalPriceElement = document.getElementsByClassName("totalPrice")[0]
+const totalPriceElement = [...document.getElementsByClassName("totalPrice")]
 const confirmButton = document.getElementsByClassName("confirm")[0]
+const toggleMessage = document.getElementsByClassName("filter")[0]
+const confirmationList = document.getElementsByTagName("ul")[1]
+const finalMessage = document.getElementsByClassName("confirmed")[0]
+const reOrderButton = document.getElementsByClassName("repeat")[0]
 
 let quantities = Array(addToCartButtons.length).fill(0)
 let totalPrices = Array(addToCartButtons.length).fill(0)
@@ -26,6 +30,7 @@ const createProductItem = (name, price, quantity) => `
 
 const itemNames = []
 const itemPrices = []
+const thumbnails = []
 
 fetch('data.json')
   .then(response => response.json())
@@ -33,6 +38,7 @@ fetch('data.json')
     data.forEach((item, index) => {
       itemNames[index] = item.name
       itemPrices[index] = item.price
+      thumbnails[index] = item.image.thumbnail
     })
   })
   .catch(error => console.error('Error al cargar el JSON:', error))
@@ -47,7 +53,9 @@ function totalPrice() {
 
 function updateCart() {
   totalAmountNumber.innerHTML = totalItemsOnCart()
-  totalPriceElement.innerHTML = `$${totalPrice().toFixed(2)}`
+  totalPriceElement.forEach(priceElement =>{
+    priceElement.innerHTML = `$${totalPrice().toFixed(2)}`
+  })
   
   if (totalItemsOnCart() === 0) {
     yourCartElement.classList.add("notfilledCart")
@@ -58,6 +66,17 @@ function updateCart() {
   }
 }
 
+const createConfirmationList = (name, price, quantity, thumbnail) => `
+  <picture>
+    <img src="${thumbnail}" alt="${(thumbnail.split("").splice(22,(thumbnail.length - 26))).join("")}">
+  </picture>
+  <div>
+    <h4>${name}</h4>
+    <p>${quantity}x <span>@$${price}</span></p>
+  </div>
+  <p>$${price * quantity}</p>
+`
+let confirmationItemElements = Array(addToCartButtons.length).fill(null)
 for (let i = 0; i < addToCartButtons.length; i++) {
   addToCartButtons[i].addEventListener("click", () => {
     quantities[i]++
@@ -75,6 +94,9 @@ for (let i = 0; i < addToCartButtons.length; i++) {
     }
     updateCart()
     updateRemoveButtons()
+
+    const confirmationItemsDisplay = document.createElement("li")
+    confirmationItemElements[i] = confirmationItemsDisplay
   })
   
   decrementButtons[i].addEventListener("click", () => {
@@ -100,6 +122,13 @@ for (let i = 0; i < addToCartButtons.length; i++) {
     const itemElement = productListElement.querySelector(`[data-index="${i}"]`)
     itemElement.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i])
     updateCart()
+  })
+  confirmButton.addEventListener("click", ()=>{
+    toggleMessage.classList.add("confirmed")
+    confirmationItemElements[i].innerHTML = createConfirmationList(itemNames[i], itemPrices[i], quantities[i], thumbnails[i])
+    itemQuantitiesResult = Array(addToCartButtons.length).fill(0)
+    confirmationList.appendChild(confirmationItemElements[i])
+    console.log(confirmationItemElements[i])
   })
 }
 
@@ -128,6 +157,6 @@ function updateRemoveButtons() {
   }
 }
 
-confirmButton.addEventListener("click", ()=>{
-  console.log("clicked!")
+reOrderButton.addEventListener("click", ()=>{
+  location.reload()
 })
