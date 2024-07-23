@@ -276,24 +276,23 @@ ul{
     -webkit-filter: opacity(0.25);
 }
 .confirmContainer{
-    overflow-y: scroll;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     display: flex;
+    flex-direction: column;
     position: fixed;
     align-items: center;
     justify-content: center;
     display: none;
 }
 .confirmedOrder{
+    overflow-y: scroll;
     width: 100%;
     max-width: 650px;
     min-width: 0;
     margin: 0;
-    position: absolute;
-    top: 0;
     box-sizing: border-box;
 }
 .confirmedOrder> img{
@@ -316,15 +315,6 @@ ul{
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 }
-/* .confirmedOrder section ul{
-    max-height: 400px;
-} */
-/* .confirmedOrder section ul::-webkit-scrollbar{
-    position: absolute;
-    background-color: rebeccapurple;
-    right: -60px;
-    width: 10px;
-} */
 .confirmedOrder section ul li{
     height: 3em;
     gap: 10px;
@@ -370,8 +360,12 @@ ul{
 .filter.confirmed{
     display: block;
 }
-.filter.confirmed ~ .confirmContainer .confirmedOrder{
-    display: block;
+.filter.confirmed ~ .confirmContainer{
+    display: flex;
+}
+
+.dessertImage.selected{
+    outline: 2px solid hsl(14, 86%, 42%);
 }
 .attribution { font-size: 11px; text-align: center; }
 .attribution a { color: hsl(228, 45%, 44%); }

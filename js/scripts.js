@@ -1,4 +1,5 @@
 const productElements = document.getElementsByClassName("product")
+const dessertImageElements = document.getElementsByClassName("dessertImage")
 const addToCartButtons = document.getElementsByClassName("addToCartButton")
 const decrementButtons = document.getElementsByClassName("decrement")
 const amountOfItems = document.getElementsByClassName("amount")
@@ -80,6 +81,7 @@ let confirmationItemElements = Array(addToCartButtons.length).fill(null)
 for (let i = 0; i < addToCartButtons.length; i++) {
   addToCartButtons[i].addEventListener("click", () => {
     quantities[i]++
+    dessertImageElements[i].classList.add("selected")
     amountOfItems[i].innerHTML = quantities[i]
     addToCartButtons[i].classList.add("clicked")
     const itemElement = productListElement.querySelector(`[data-index="${i}"]`)
@@ -110,6 +112,7 @@ for (let i = 0; i < addToCartButtons.length; i++) {
         itemElement.innerHTML = createProductItem(itemNames[i], itemPrices[i], quantities[i])
       }
       if(quantities[i] < 1){
+        dessertImageElements[i].classList.remove("selected")
         addToCartButtons[i].classList.remove("clicked")
       }
       updateCart()
